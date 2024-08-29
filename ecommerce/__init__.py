@@ -1,0 +1,1 @@
+#ecommerce folder is a project but to do CRUD operations we require to create an app aka product in this case
