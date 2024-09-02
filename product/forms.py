@@ -2,6 +2,10 @@
 from django.forms import ModelForm
 from . models import *
 #to create form template use crispy forms
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
 class ProductForm(ModelForm):
     class Meta:
         model = Product
