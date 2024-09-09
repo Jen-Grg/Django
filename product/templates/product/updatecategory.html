@@ -2,18 +2,13 @@
 {% load static %}
 {% load crispy_forms_tags %}
  {% block title %}
-<title>Ecommerce | Add Category Page</title>
+<title>Ecommerce | Update Category</title>
 {% endblock %} 
 {% block admin_content %} 
 
 <div class="form-section">
   {% for msgs in messages %}
   <div class="msgs flex justify-center my-3">
-  {% if msgs.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-  <span class="bg-green-500 py-2 px-3 text-white">
-      {{msgs}}
-  </span>
-  {% endif %}
   {% if msgs.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
   <span class="bg-red-500 py-2 px-3 text-white">
       {{msgs}}
@@ -21,14 +16,16 @@
   {% endif %}
   </div>
   {% endfor %}
-  <h1 class="text-3xl text-blue-400 text-center font-bold my-4">Add Product</h1>
+  <h1 class="text-3xl text-blue-400 text-center font-bold my-4">Update Product</h1>
 </div>
+ 
+
 <div class="flex justify-center">
   <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form | crispy }}
       <div class="mb-2">
-          <input type="submit" value="Add Category" class="bg-blue-700 py-2 px-5 text-white">
+          <input type="submit" value="Update Category" class="bg-blue-700 py-2 px-5 text-white">
       </div>
   </form>
 </div>

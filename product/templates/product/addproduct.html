@@ -1,10 +1,30 @@
-  {% extends 'index.html' %} 
+  {% extends 'admins/index.html' %} 
   {% load static %}
   {% load crispy_forms_tags %}
    {% block title %}
-  <title>Ecommerce | Add Product Page</title>
+  <title>Admin | Add Product Page</title>
   {% endblock %} 
-  {% block main_content %} 
+  {% block admin_content %} 
+  
+  <div class="form-section">
+    {% for msgs in messages %}
+    <div class="msgs flex justify-center my-3">
+    {% if msgs.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <span class="bg-green-500 py-2 px-3 text-white">
+        {{msgs}}
+    </span>
+    {% endif %}
+    {% if msgs.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <span class="bg-red-500 py-2 px-3 text-white">
+        {{msgs}}
+    </span>
+    {% endif %}
+    </div>
+    {% endfor %}
+    <h1 class="text-3xl text-blue-400 text-center font-bold my-4">Add Product</h1>
+  </div>
+   
+  
  <div class="flex justify-center">
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}

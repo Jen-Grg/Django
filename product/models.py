@@ -1,7 +1,7 @@
 from django.db import models
 #to use foreign key to create a one to many relationship in this case for category of products
 class Category(models.Model):
-    category_name = models.CharField(max_length = 200)
+    category_name = models.CharField(max_length = 200, unique=True)
     def __str__(self):
         return self.category_name
 #As soon as you make changes in the model file we must use the command makemigration and migrate
