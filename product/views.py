@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from . models import *
 from . forms import *
 from django.contrib import messages
+from user.auth import admin_only
 # Create your views here.
 #This is the main function to perform actions for database. We code in this file
 #There is two types, function based views and class based views: class based views is easier ot use to create APIs but harder to debug than function based views
 #Django performs in mvt pattern(model(database),views(function, class),template(frontend template is stored)) pattern unlike Java , PHP which uses nvc
 #Django has a built in admin panel
 def home(request):
+    user = request.user
     #.all() show everything in the database, to keep limit
     product = Product.objects.all().order_by('-id')[:4]
     context = {
@@ -17,6 +19,7 @@ def home(request):
     return render(request, "product/index.html", context)
 
 def productpage(request):
+    user = request.user
     product = Product.objects.all()
     context1 = {
         "products": product
@@ -29,7 +32,7 @@ def categorylist(request):
         "category": category
     }
     return render(request,"product/categorylist.html",context)
-
+@admin_only
 def addcategory(request):
     if request.method == "POST":
         form1 = CategoryForm(request.POST, request.FILES)
@@ -42,6 +45,7 @@ def addcategory(request):
             return render(request, 'product/addcategory.html',{"form": form1})
     return render(request, "product/addcategory.html", {"form" : CategoryForm})
 # we use one slash more in redirect than render!!!
+@admin_only
 def updatecategory(request, category_id):
     instance = Category.objects.get(id=category_id)
     if request.method == "POST":
@@ -58,6 +62,7 @@ def updatecategory(request, category_id):
         }
     return render(request, 'product/updatecategory.html', context)
 
+@admin_only
 def deletecategory(request, category_id):
     category = Category.objects.get(id = category_id)
     category.delete()
@@ -71,6 +76,7 @@ def productlist(request):
     }
     return render(request,"product/productlist.html",context1)
 
+@admin_only
 def addproduct(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
@@ -83,6 +89,7 @@ def addproduct(request):
             return render(request, 'product/addproduct.html',{"form": form})
     return render(request, "product/addproduct.html", {"form" : ProductForm})
 
+@admin_only
 def updateproduct(request, product_id):
     instance = Product.objects.get(id=product_id)
     #context is used to show the form
@@ -100,6 +107,8 @@ def updateproduct(request, product_id):
         }
     return render(request, 'product/updateproduct.html', context)
 
+
+@admin_only
 def deleteproduct(request, product_id):
     product = Product.objects.get(id = product_id)
     product.delete()

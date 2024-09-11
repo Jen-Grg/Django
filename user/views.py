@@ -27,10 +27,15 @@ def login_user(request):
             user = authenticate(request, username = data['username'], password = data['password'])
             if user is not None:
                 login(request, user)
-                messages.add_message(request, messages.SUCCESS, "You have successfully logged in")
-                return redirect('/product/productpage')
+                if user.is_staff:
+                    return redirect('/ecommerceadmin')
+                else:
+                    return redirect('home')
             else:
                 messages.add_message(request, messages.ERROR, "Kindly verify all the fields")
                 return render(request, 'user/login.html', {'form': form})
     return render(request, 'user/login.html', { 'form': LoginForm })
-   
+
+def logout_user(request):
+    logout(request)
+    return redirect ('/login')
